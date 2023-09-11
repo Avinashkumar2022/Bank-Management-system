@@ -8,7 +8,7 @@ const int N = 5; // Size of the maze (N x N)
 vector<vector<char>> maze(N, vector<char>(N, '0')); // Initialize a 2D maze
 
 bool isValid(int x, int y) {
-    return (x >= 0 && x < N && y >= 0 && y < N && maze[x][y] == '0');
+    return (x >= 0 && x < N && y >= 0 && y < N && maze[x][y] != '1');
 }
 
 void findShortestPath(int startX, int startY) {
@@ -37,11 +37,11 @@ void findShortestPath(int startX, int startY) {
         }
     }
 
-        
     // Trace back the path and mark with "P"
     int x = 0, y = 0;
+    
     while (x != startX || y != startY) {
-        bool found = false;  // Add a flag to check if a valid move is found
+        bool found = false;
         for (int i = 0; i < 4; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
@@ -50,21 +50,29 @@ void findShortestPath(int startX, int startY) {
                 x = newX;
                 y = newY;
                 maze[x][y] = 'P';
-                found = true;  // Valid move found
+                found = true;
                 break;
             }
         }
-        
+
         // If no valid move is found, mark the cell with "-"
         if (!found) {
-            maze[x][y] = '-';
             break;
         }
     }
 
-    // ...
+    // Mark walls with "-"
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (maze[i][j] == '1' || maze[i][j] == '0') {
+                maze[i][j] = '-';
+            }
+        }
+    }
+
     // Print the maze with the path
     cout << "Solved Maze is:" << endl;
+    maze[0][0]='P';
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
             cout << maze[i][j] << " ";
