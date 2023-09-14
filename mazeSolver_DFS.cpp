@@ -42,7 +42,7 @@ int main() {
     if (solveMaze(0, 0)) {
         cout << "Solved Maze is:" << endl;
 
-        // Print the solved maze
+        // Printing the maze 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 cout << maze[i][j] << " ";
